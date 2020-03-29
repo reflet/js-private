@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="utf-8">
+    <title>JavaScriptのprivate変数/関数を作ってみる</title>
+</head>
+<body>
+  <div id="test"></div>
+  <script src="./js/lib/jquery-1.7.2.min.js"></script>
+  <script type="text/javascript">
+  var model = {
+    staff: (function () {
+      var name = 'private';
+      return {
+        getName: function () {
+          return name;
+        },
+        setName: function (val) {
+          name = val;
+        }
+      };
+    }()),
+    staff2: {}
+  };
+
+  var e = $('#test');
+
+  e.append($('<p>').text('name:' + model.staff.name));           // undefined
+  e.append($('<p>').text('getName():' + model.staff.getName())); // private
+
+  model.staff.setName('aaa');
+  e.append($('<p>').text('getName():' + model.staff.getName())); // aaa
+
+  model.staff.setName('bbb');
+  e.append($('<p>').text('getName():' + model.staff.getName())); // bbb
+
+  console.log(model);
+  </script>
+</body>
+</html>
